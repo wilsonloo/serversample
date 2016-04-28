@@ -15,10 +15,7 @@ func (c *Client) CName() string {
 
 // Create 创建客户端信息
 func (c *Client) Create() error {
-	err := mHandler.C(c.CName()).RemoveId(c.ID)
-	if err != nil {
-		return err
-	}
+	_ = mHandler.C(c.CName()).RemoveId(c.ID)
 	return mHandler.C(c.CName()).Insert(c)
 }
 
