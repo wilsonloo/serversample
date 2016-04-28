@@ -67,7 +67,6 @@ func (ac *AuthorizeController) Post() {
 	switch authorizeReq.ResponseType {
 	case "code":
 		code, err := oAuthManager.GetACManager().GenerateCode(authorizeReq.ClientID, userID, authorizeReq.RedirectURI, authorizeReq.Scope)
-		beego.Debug(code, err)
 		if err != nil {
 			panic(err)
 		}
