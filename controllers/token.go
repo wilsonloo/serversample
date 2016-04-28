@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"net/url"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -39,8 +40,12 @@ func (tc *TokenController) Post() {
 	tc.Ctx.Output.Header("Pragma", "no-cache")
 	switch tokenReq.GrantType {
 	case "authorization_code": // 授权码模式
+		redirectURI, err := url.QueryUnescape(tokenReq.RedirectURI)
+		if err != nil {
+			panic(err)
+		}
 		token, err := oAuthManager.GetACManager().
-			GenerateToken(tokenReq.Code, tokenReq.RedirectURI, tokenReq.ClientID, tokenReq.ClientSecret, true)
+			GenerateToken(tokenReq.Code, redirectURI, tokenReq.ClientID, tokenReq.ClientSecret, true)
 		if err != nil {
 			panic(err)
 		}

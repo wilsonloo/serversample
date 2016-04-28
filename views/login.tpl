@@ -10,21 +10,21 @@
 	</head>
 	<body>
 		<div class="container">
+			<h1 class="page-header">
+			认证服务器—用户登录&nbsp;
+			<small>默认的登录账号(用户名：admin,密码：admin)</small>
+			</h1>
 			{{if .ErrorMessage}}
 			<div class="alert alert-danger" role="alert">{{.ErrorMessage}}</div>
 			{{end}}
-			<h1 class="page-header">
-			用户登录&nbsp;
-			<small>默认的登录账号(用户名：admin,密码：admin)</small>
-			</h1>
 			<form action="/login?code=123" method="post">
 				<div class="form-group">
 					<label for="UserName">用户名</label>
-					<input type="text" class="form-control" name="UserName" placeholder="UserName">
+					<input type="text" class="form-control" name="UserName" placeholder="请输入用户名">
 				</div>
 				<div class="form-group">
 					<label for="Password">密码</label>
-					<input type="password" class="form-control" name="Password" placeholder="Password">
+					<input type="password" class="form-control" name="Password" placeholder="请输入密码">
 				</div>
 				<button type="submit" class="btn btn-primary">登录</button>
 			</form>

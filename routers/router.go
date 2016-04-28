@@ -8,6 +8,6 @@ import (
 func init() {
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/login", &controllers.LoginController{})
-	beego.Router("/authorize?:response_type&:client_id&:redirect_uri", &controllers.AuthorizeController{})
-	beego.Router("/token?:grant_type", &controllers.TokenController{})
+	beego.Router("/authorize", &controllers.AuthorizeController{})
+	beego.Router("/token", &controllers.TokenController{})
 }

@@ -21,15 +21,15 @@ func init() {
 		Secret: "999999",
 		Domain: beego.AppConfig.String("ClientHost"),
 	}
-	_, err = cli.GetByID(cli.ID)
-	if err != nil {
-		if err := cli.Create(); err != nil {
-			panic(err)
-		}
+	if err := cli.Create(); err != nil {
+		panic(err)
 	}
 	config := &oauth2.OAuthConfig{
 		MongoURL:             beego.AppConfig.String("MongoURL"),
 		ClientCollectionName: cli.CName(),
+		ACConfig: &oauth2.ACConfig{
+			ATExpiresIn: 60 * 60 * 24,
+		},
 	}
 	manager, err := oauth2.CreateOAuthManager(config)
 	if err != nil {

@@ -67,6 +67,7 @@ func (ac *AuthorizeController) Post() {
 	switch authorizeReq.ResponseType {
 	case "code":
 		code, err := oAuthManager.GetACManager().GenerateCode(authorizeReq.ClientID, userID, authorizeReq.RedirectURI, authorizeReq.Scope)
+		beego.Debug(code, err)
 		if err != nil {
 			panic(err)
 		}
@@ -74,8 +75,10 @@ func (ac *AuthorizeController) Post() {
 		if err != nil {
 			panic(err)
 		}
-		redirectURL.Query().Set("code", code)
-		redirectURL.Query().Set("state", authorizeReq.State)
+		redirectValues := url.Values{}
+		redirectValues.Set("code", code)
+		redirectValues.Set("state", authorizeReq.State)
+		redirectURL.RawQuery = redirectValues.Encode()
 		ac.Redirect(redirectURL.String(), http.StatusFound)
 	default:
 		panic("未识别的授权类型")
