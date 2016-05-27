@@ -7,8 +7,8 @@ var (
 )
 
 // Init Model初始化
-func Init(mongoURL string) error {
-	handler, err := mongo.InitHandler(mongoURL)
+func Init(url, dbName string) error {
+	handler, err := mongo.InitHandlerWithDB(url, dbName)
 	if err != nil {
 		return err
 	}

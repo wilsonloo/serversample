@@ -11,7 +11,7 @@ var (
 )
 
 func init() {
-	err := models.Init(beego.AppConfig.String("MongoURL"))
+	err := models.Init(beego.AppConfig.String("MongoURL"), beego.AppConfig.String("MongoURLDBName"))
 	if err != nil {
 		panic(err)
 	}
@@ -24,14 +24,16 @@ func init() {
 	if err := cli.Create(); err != nil {
 		panic(err)
 	}
-	config := &oauth2.OAuthConfig{
-		MongoURL:             beego.AppConfig.String("MongoURL"),
-		ClientCollectionName: cli.CName(),
+	mgoConfig := &oauth2.MongoConfig{
+		URL:    beego.AppConfig.String("MongoURL"),
+		DBName: beego.AppConfig.String("MongoURLDBName"),
+	}
+	oauthConfig := &oauth2.OAuthConfig{
 		ACConfig: &oauth2.ACConfig{
 			ATExpiresIn: 60 * 60 * 24,
 		},
 	}
-	manager, err := oauth2.CreateOAuthManager(config)
+	manager, err := oauth2.CreateDefaultOAuthManager(mgoConfig, "", "Client", oauthConfig)
 	if err != nil {
 		panic(err)
 	}
