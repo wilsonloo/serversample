@@ -33,9 +33,12 @@ func init() {
 			ATExpiresIn: 60 * 60 * 24,
 		},
 	}
-	manager, err := oauth2.CreateDefaultOAuthManager(mgoConfig, "", "Client", oauthConfig)
+	manager, err := oauth2.NewDefaultOAuthManager(oauthConfig, mgoConfig, "Client", "")
 	if err != nil {
 		panic(err)
 	}
+	manager.SetACGenerate(oauth2.NewDefaultACGenerate())
+	manager.SetACStore(oauth2.NewACMemoryStore(0))
+
 	oAuthManager = manager
 }
